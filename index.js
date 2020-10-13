@@ -1,6 +1,11 @@
+const bodyParser = require('body-parser');
+const { response } = require('express');
 const express = require('express');
 const app = express();
 const {pokemon} = require("./pokedex.json");
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 /*
 Los verbos HTTP
 GET -> Obtiene recursos
@@ -12,6 +17,9 @@ DELETE -> Borra un recurso
 app.get("/",(req, res, next)=>{
     return res.status(200).send("Bienvenido a pokedex");
     
+});
+app.post("/pokemon",(req, res, next)=>{
+    return res.status(200).send(req.body);
 });
 
 app.get("/pokemon", (req, res, next)=>{
@@ -32,7 +40,7 @@ app.get('/pokemon/:name([A-Za-z]+)', (req, res, next)=>{
     const name = req.params.name;
 
     const pk = pokemon.filter((p)=>{
-        return (p.name.toUpperCase() == name.toUpperCase()) ? p: null;
+        return (p.name.toUpperCase() == name.toUpperCase()) && p;
     });
     (pk.length>0) ? res.status(200).send(pk) : res.status(404).send("Pokemon no encontrado");
 });
