@@ -24,10 +24,7 @@ PUT -> Modifica un recurso
 PATCH -> Modifica una parte de recurso
 DELETE -> Borra un recurso
 */
-app.get("/",(req, res, next)=>{
-    res.status(200);
-    res.send("Hola, mundo");
-});
+app.get("/", index);
 
 app.use("/user", user);
 app.use(auth);
